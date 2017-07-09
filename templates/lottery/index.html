@@ -76,7 +76,9 @@
                 prize_id: prize_id,
             },
             success: function (json) {
-                alert('抽奖成功，抽奖码为' + json['lucky_num'])
+                alert('抽奖成功，抽奖码为' + json['lucky_num'] + '\n' + '共' + json['cnt_user'] + '人抽奖'
+                    + json['cnt_num'] + '次\n' + '你抽奖' + json['count'] + '次\n' + '超过' + json['percentage']
+                    + '%的人！')
             }
         })
     }

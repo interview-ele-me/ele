@@ -20,3 +20,12 @@ class Result(models.Model):
     user = models.ForeignKey(User)
     prize = models.ForeignKey(Prize)
     lucky_num = models.IntegerField(default=0)
+
+
+class CountUserByPrize(models.Model):
+    user_id = models.IntegerField()
+    prize_id = models.IntegerField()
+    count = models.IntegerField(default=0)
+
+    class Meta:
+        index_together = ["user_id", "prize_id"]
