@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'lottery',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +57,7 @@ ROOT_URLCONF = 'ele.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,10 +79,10 @@ WSGI_APPLICATION = 'ele.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ele',
-        'USER': 'root',
-        'PASSWORD': 'ele123ME',
-        'HOST': 'rm-uf653vi02y2o6o370o.mysql.rds.aliyuncs.com',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
         'PORT': '3306',
     }
 }
@@ -122,3 +125,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+LOGIN_REDIRECT_URL = '/lottery/index/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+MEDIA_URL = '/upload/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'upload').replace("\\", "/")
