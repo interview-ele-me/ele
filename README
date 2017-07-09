@@ -1,0 +1,23 @@
+v0.1 原需求
+v0.2 产品经理提的新需求
+
+如果运行v0.2版本代码，则在makemigrate之前, 请将 ele/lottery/views_api.py 的 12-34 行注释
+并且调用一次/api/init_CountUserByPrize/
+以初始化相应逻辑（每个用户目前已抽取特定产品的的次数）
+
+数据库索引根据model定义能看出来
+
+
+每个奖品的排名情况使用一个dict根据奖品id映射到list
+所以添加新奖品之后需要重启系统
+设某奖品对应的list为t
+则: t[n] == m  表示 抽取该奖品 n 次的人数为 m
+使用树状数组求解超过了多少人（精确数字）
+
+
+抽奖API：/api/get_lucky_num/
+post
+data = {'shanghai':xxx, 'shenzhen': xxx}
+
+如果某商品无人抽取，则显示 未开奖
+开奖之后不可继续抽奖的逻辑未实现
