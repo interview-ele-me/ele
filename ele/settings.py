@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'ele.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ele',
+        'USER': 'root',
+        'PASSWORD': 'ele123ME',
+        'HOST': 'rm-uf653vi02y2o6o370o.mysql.rds.aliyuncs.com',
+        'PORT': '3306',
     }
 }
 
