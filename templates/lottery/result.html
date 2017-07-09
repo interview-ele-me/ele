@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{{ article.title }}</title>
+        <link rel="stylesheet" href="{% static 'lottery/css/semantic.css' %}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'lottery/css/detail.css' %}"  media="screen" title="no title" charset="utf-8">
+    </head>
+    <body>
+        <div class="ui inverted top fixed menu borderless blue menu">
+            <div class="right menu">
+                {% if request.user.is_authenticated %}
+                    <div class="item">
+                        <h5 class="ui inverted header">
+                            <div class="ui mini circular image">
+                                <img src="{% static 'lottery/images/default.png' %}" alt="" />
+                            </div>
+                            <span>{{ request.user.username }}</span>
+                        </h5>
+                    </div>
+                    <div class="item">
+                        <a href="{% url 'logout' %}" class="ui inverted circular button">Logout</a>
+                    </div>
+
+                {% else %}
+
+                    <div class="item">
+                        <a href="{% url 'login' %}" class="ui inverted circular button">Signup/Login</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="ui vertical inverted detail segment" style="background-image: url({% static 'lottery/images/detail.jpg' %})"></div>
+
+        <div class="ui basic segment container" style="width:700px;border:none;box-shadow:none;margin-top:50px;">
+        </div>
+
+
+        <div class="ui segment container" style="width:700px;border:none;box-shadow:none">
+            {% if result %}
+            <div class="column">
+                <a class="ui fluid card" href="{% url 'index' %}">
+                    <div class="image">
+                        <img src="/upload/{{ result.prize.img }}" alt="" style="height:200px;object-fit: cover;">
+                    </div>
+                </a>
+
+                商品名称
+                <div class="title header" href="#">{{ result.prize.name }}</div>
+                中奖人
+                <div class="title header" href="#">{{ result.user.username }}</div>
+                中奖码
+                <div class="title header" href="#">{{ result.lucky_num }}</div>
+
+            </div>
+            {% else %}
+                暂未开奖
+            {% endif %}
+            <div class="ui divider"></div>
+        </div>
+    </body>
+</html>

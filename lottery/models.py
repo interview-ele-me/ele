@@ -6,6 +6,7 @@ class Prize(models.Model):
     name = models.CharField(max_length=100, default='')
     total_num = models.IntegerField(default=0)
     lucky_num = models.IntegerField(default=0)
+    img = models.FileField(upload_to='prize_image/')
 
 
 class UserByPrize(models.Model):

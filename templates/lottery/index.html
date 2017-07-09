@@ -1,0 +1,93 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'lottery/css/semantic.css' %}" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="{% static  'lottery/css/list_custom.css' %}" media="screen" title="no title" charset="utf-8">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+</head>
+
+<body>
+    <div class="ui inverted top fixed menu borderless blue menu">
+        <div class="right menu">
+            {% if request.user.is_authenticated %}
+                <div class="item">
+                    <h5 class="ui inverted header">
+                        <div class="ui mini circular image">
+                            <img src="{% static 'lottery/images/default.png' %}" alt="" />
+                        </div>
+                        <span>{{ request.user.username }}</span>
+                    </h5>
+                </div>
+                <div class="item">
+                    <a href="{% url 'logout' %}" class="ui inverted circular button">Logout</a>
+                </div>
+
+            {% else %}
+
+                <div class="item">
+                    <a href="{% url 'login' %}" class="ui inverted circular button">Signup/Login</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="ui inverted segment container nav">
+    </div>
+
+    <div class="ui basic segment container content">
+
+        <div class="ui three column grid">
+            {% for prize in prize_list %}
+            <div class="column">
+                <a class="ui fluid card" href="{% url 'result' prize.id %}">
+                    <div class="image">
+                        <img src="/upload/{{ prize.img }}" alt="" style="height:200px;object-fit: cover;">
+                    </div>
+                </a>
+
+                <div class="title header" href="#">{{ prize.name }}</div>
+                <button onclick="buy({{ prize.id }})">抽奖</button>
+
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+    <div class="ui inverted  vertical very padded  segment">
+    </div>
+
+<script>
+    function buy(prize_id) {
+        $(function () {
+            $.ajaxSetup({
+                headers: { "X-CSRFToken": getCookie("csrftoken") }
+            });
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/api/buy/',
+            data: {
+                prize_id: prize_id,
+            },
+            success: function (json) {
+                alert('抽奖成功，抽奖码为' + json['lucky_num'])
+            }
+        })
+    }
+
+    function getCookie(name) {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
+    }
+</script>
+</body>
+</html>
